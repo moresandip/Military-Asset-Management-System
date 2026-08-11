@@ -345,5 +345,4 @@ Made with ❤️ for Military Operations Management
 
 ⭐ **Star this repo** if you found it helpful!
 
-</div>#   M i l i t a r y - A s s e t - M a n a g e m e n t - S y s t e m  
- 
+</div>
