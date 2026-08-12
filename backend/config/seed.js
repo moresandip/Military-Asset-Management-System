@@ -130,7 +130,12 @@ async function seedDatabase() {
   console.log('Database successfully seeded with military bases, users, equipment, purchases, transfers, assignments, and audit trails!');
 }
 
-seedDatabase().catch((err) => {
-  console.error('Failed to seed database:', err);
-  process.exit(1);
-});
+export { seedDatabase };
+
+// Only auto-run when called directly (npm run seed)
+if (process.argv[1].includes('seed.js')) {
+  seedDatabase().catch((err) => {
+    console.error('Failed to seed database:', err);
+    process.exit(1);
+  });
+}

@@ -9,11 +9,22 @@ import transferRoutes from './routes/transferRoutes.js';
 import assignmentRoutes from './routes/assignmentRoutes.js';
 import auditRoutes from './routes/auditRoutes.js';
 import { apiAuditLogger } from './middlewares/loggerMiddleware.js';
+import db, { initDb } from './config/db.js';
+import { seedDatabase } from './config/seed.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Auto-seed database if empty (first deployment)
+initDb();
+const users = db.prepare('SELECT * FROM users').all();
+if (users.length === 0) {
+  console.log('🌱 Empty database detected — running auto-seed...');
+  await seedDatabase();
+  console.log('✅ Database seeded successfully!');
+}
 
 // Security & Parsing Middlewares
 app.use(helmet());
