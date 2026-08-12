@@ -32,9 +32,9 @@ export default function App() {
           <ProtectedRoute>
             <div className="min-h-screen flex flex-col bg-[#080d1a]">
               <Navbar />
-              <div className="flex flex-1">
+              <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
                 <Sidebar />
-                <main className="flex-1 p-6 overflow-y-auto">
+                <main className="flex-1 p-4 md:p-6 overflow-y-auto">
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/purchases" element={<Purchases />} />

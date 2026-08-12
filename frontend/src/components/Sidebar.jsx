@@ -47,13 +47,13 @@ export const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 border-r border-slate-800 bg-[#0b1322] flex flex-col justify-between p-4 shrink-0 min-h-[calc(100vh-4rem)]">
-      <div className="space-y-6">
-        <div className="px-3 py-2 text-xs font-mono font-semibold uppercase tracking-wider text-slate-500 flex items-center gap-2">
+    <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-slate-800 bg-[#0b1322] flex flex-col justify-between p-2 md:p-4 shrink-0 md:min-h-[calc(100vh-4rem)]">
+      <div className="space-y-2 md:space-y-6">
+        <div className="hidden md:flex px-3 py-2 text-xs font-mono font-semibold uppercase tracking-wider text-slate-500 items-center gap-2">
           <Boxes className="w-4 h-4 text-cyan-400" /> Operational Control
         </div>
 
-        <nav className="space-y-1">
+        <nav className="flex flex-row md:flex-col gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
           {navItems.map((item) => {
             if (!item.roles.includes(user?.role)) return null;
             const Icon = item.icon;
@@ -62,23 +62,23 @@ export const Sidebar = () => {
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center space-x-3 px-3 py-2.5 rounded-xl font-medium transition text-sm ${
+                  `flex items-center gap-2 md:space-x-3 px-3 py-2 md:py-2.5 rounded-xl font-medium transition text-sm shrink-0 ${
                     isActive
                       ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold glow-cyan'
                       : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
                   }`
                 }
               >
-                <Icon className="w-5 h-5" />
-                <span>{item.name}</span>
+                <Icon className="w-5 h-5 md:w-5 md:h-5" />
+                <span className="whitespace-nowrap">{item.name}</span>
               </NavLink>
             );
           })}
         </nav>
       </div>
 
-      {/* RBAC Notice Footer */}
-      <div className="p-3 bg-slate-900/90 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1 font-mono">
+      {/* RBAC Notice Footer - Hidden on Mobile */}
+      <div className="hidden md:block p-3 bg-slate-900/90 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1 font-mono mt-4">
         <div className="text-slate-300 font-semibold flex items-center justify-between">
           <span>Active Role:</span>
           <span className="text-cyan-400">{user?.role}</span>
