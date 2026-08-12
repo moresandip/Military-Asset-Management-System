@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../middlewares/authMiddleware.js';
 import { logAuditEvent } from '../middlewares/loggerMiddleware.js';
+import { seedDatabase } from '../config/seed.js';
 
 export const login = async (req, res) => {
   try {
@@ -10,6 +11,13 @@ export const login = async (req, res) => {
 
     if (!username || !password) {
       return res.status(400).json({ message: 'Username and password are required.' });
+    }
+
+    // JIT Auto-seed check for Render's ephemeral filesystem
+    const usersCount = db.prepare('SELECT * FROM users').all();
+    if (usersCount.length === 0) {
+      console.log('🌱 No users found during login. Running JIT auto-seed...');
+      await seedDatabase();
     }
 
     const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username);
